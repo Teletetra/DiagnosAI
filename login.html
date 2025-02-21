@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Login/Signup - Diagnos AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            color: #37474f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            width: 900px;
+            max-width: 95%;
+            display: flex;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-container {
+            flex: 1;
+            background: linear-gradient(135deg, rgba(178, 235, 242, 0.6), rgba(224, 247, 250, 0.6));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lung-image {
+            width: 100%;
+            max-width: 450px;
+            animation: breathe 6s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        .form-container {
+            flex: 1;
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h2 {
+            color: #00897b;
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.7rem;
+            color: #455a64;
+            font-size: 1.1rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #b2dfdb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #00897b;
+            outline: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #78909c;
+        }
+
+        .password-toggle:hover {
+            color: #546e7a;
+        }
+
+        button {
+            background: linear-gradient(to right, #009688, #4db6ac);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .switch-form {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 1rem;
+        }
+
+        .switch-form a {
+            color: #00897b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .switch-form a:hover {
+            text-decoration: underline;
+            color: #00796b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="images.png" alt="Animated Lung" class="lung-image">
+        </div>
+        <div class="form-container">
+            <h2 id="formTitle">Doctor Login</h2>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div style="position:relative;">
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword('loginPassword', this)"></i>
+                    </div>
+                </div>
+                <button type="button" onclick="login()">Login</button>
+            </form>
+
+            <form id="signupForm" style="display: none;">
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <div style="position:relative;">
+                        <input type="password" id="signupPassword" placeholder="Enter your password" required>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword('signupPassword', this)"></i>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                    <div style="position:relative;">
+                        <input type="password" id="signupConfirmPassword" placeholder="Confirm your password" required>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword('signupConfirmPassword', this)"></i>
+                    </div>
+                </div>
+                <button type="button" onclick="signup()">Sign Up</button>
+            </form>
+
+            <div class="switch-form">
+                <p id="switchText">Don't have an account? <a href="#" onclick="toggleForm()">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm() {
+            const loginForm = document.getElementById("loginForm");
+            const signupForm = document.getElementById("signupForm");
+            const formTitle = document.getElementById("formTitle");
+            const switchText = document.getElementById("switchText");
+
+            if (loginForm.style.display === "none") {
+                loginForm.style.display = "block";
+                signupForm.style.display = "none";
+                formTitle.textContent = "Doctor Login";
+                switchText.innerHTML = "Don't have an account? <a href='#' onclick='toggleForm()'>Sign Up</a>";
+            } else {
+                loginForm.style.display = "none";
+                signupForm.style.display = "block";
+                formTitle.textContent = "Doctor Signup";
+                switchText.innerHTML = "Already have an account? <a href='#' onclick='toggleForm()'>Login</a>";
+            }
+        }
+
+        function togglePassword(id, element) {
+            let input = document.getElementById(id);
+            input.type = input.type === "password" ? "text" : "password";
+            element.classList.toggle("fa-eye-slash");
+        }
+        async function login() {
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    if (!email || !password) {
+        alert("Please enter email and password.");
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:5000/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            localStorage.setItem("token", result.token); // Store JWT Token
+            alert("Login successful!");
+            window.location.href = "dashboard.html"; // Redirect to Dashboard
+        } else {
+            alert(result.error || "Login failed. Please check your credentials.");
+        }
+    } catch (error) {
+        console.error("Login Error:", error);
+        alert("An error occurred. Please try again.");
+    }
+}
+async function signup() {
+    const email = document.getElementById("signupEmail").value;
+    const password = document.getElementById("signupPassword").value;
+    const confirmPassword = document.getElementById("signupConfirmPassword").value;
+
+    if (!email || !password || !confirmPassword) {
+        alert("Please fill all fields.");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:5000/api/auth/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("Signup successful! You can now login.");
+            toggleForm(); // Switch back to Login form
+        } else {
+            alert(result.error || "Signup failed. Please try again.");
+        }
+    } catch (error) {
+        console.error("Signup Error:", error);
+        alert("An error occurred. Please try again.");
+    }
+}
+window.onload = function () {
+    if (localStorage.getItem("token")) {
+        window.location.href = "mvp.html.html"; 
+    }
+};
+async function fetchDoctorProfile() {
+    const token = localStorage.getItem("token");
+    if (!token) return alert("Unauthorized. Please log in.");
+
+    try {
+        const response = await fetch("http://localhost:5000/api/auth/me", {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const doctor = await response.json();
+        alert(`Welcome, Dr. ${doctor.email}`);
+    } catch (error) {
+        console.error("Error fetching profile:", error);
+    }
+}
+
+    </script>
+</body>
+</html>
